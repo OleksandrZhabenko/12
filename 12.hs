@@ -77,7 +77,7 @@ dropLast x | ((drop (length x - 4) x) == "->\"\n") = dropLast (take (length x - 
            | otherwise = x ++ "\n"
            
 dropDouble :: String -> String
-dropDouble x = if length x > 1 
+dropDouble x = if length x >= 2 
                then if (head x == '\"') && (head (tail x) == '\"') 
                     then dropDouble (tail x)
                     else (head x):(dropDouble (tail x))
@@ -110,13 +110,13 @@ createNthLine2 x@(xs:xss) n | ((n < 1) || (n > length x)) = error "Undefined lin
 fillEmptyCells2 :: [[String]] -> [[String]]
 fillEmptyCells2 x = map (createNthLine2 x) (reverse [1..(length x)])
 
-beginsWithDiez :: String -> Bool
-beginsWithDiez [] = False
-beginsWithDiez [x] = False
-beginsWithDiez x@(x':x'':xs) = if ((x' == '@') || ((x' == '\"') && (x'' == '@'))) then True else False
+beginsWithAtSign :: String -> Bool
+beginsWithAtSign [] = False
+beginsWithAtSign [x] = False
+beginsWithAtSign x@(x':x'':xs) = if ((x' == '@') || ((x' == '\"') && (x'' == '@'))) then True else False
 
 findFilledWithColor :: [[String]] -> [String]
-findFilledWithColor x = (concat . map (filter (beginsWithDiez) )) x
+findFilledWithColor x = (concat . map (filter (beginsWithAtSign) )) x
 
 (+++) :: String -> String -> String -> String
 (+++) x y z = x ++ y ++ z 
@@ -128,6 +128,6 @@ processCells :: String -> String
 processCells x = processCellsEnd (fillEmptyCells2 (processCellsBeginning x))
 
 combineCells :: String -> String
-combineCells x = let y = (fillEmptyCells2 (processCellsBeginning x)) in concat ["strict digraph 1 {\n","overlap=false\n",(processCells x),(makeFilledWithColor (findFilledWithColor y)),"\n}\n"]
+combineCells x = let (y,z) = ((fillEmptyCells2 (processCellsBeginning x)),(processCellsEnd (fillEmptyCells2 (processCellsBeginning x)))) in concat ["strict digraph 1 {\n","overlap=false\n",z,(makeFilledWithColor (findFilledWithColor y)),"\n}\n"]
 
 main = readFile "1.csv" >>= return . combineCells >>= writeFile "x12.gv"
