@@ -128,6 +128,6 @@ processCells :: String -> String
 processCells x = processCellsEnd (fillEmptyCells2 (processCellsBeginning x))
 
 combineCells :: String -> String
-combineCells x = let (y,z) = ((fillEmptyCells2 (processCellsBeginning x)),(processCellsEnd (fillEmptyCells2 (processCellsBeginning x)))) in concat ["strict digraph 1 {\n","overlap=false\n",z,(makeFilledWithColor (findFilledWithColor y)),"\n}\n"]
+combineCells x = let (y,z) = (x,x) in concat ["strict digraph 1 {\n","overlap=false\n",(processCellsEnd (fillEmptyCells2 (processCellsBeginning z))),(makeFilledWithColor (findFilledWithColor (fillEmptyCells2 (processCellsBeginning y)))),"\n}\n"]
 
 main = readFile "1.csv" >>= return . combineCells >>= writeFile "x12.gv"

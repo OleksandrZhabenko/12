@@ -20,6 +20,6 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
-for k in `seq 1 1000` ; do echo "Enter the name of the file:"; export MMMMM=`cat -`; ./12 ; mv 1.csv "`date +%s | tee x.mmmmm -`"."$MMMMM".csv; fdp -Tsvg \
+for k in `seq 1 1000` ; do echo "Enter the name of the file:"; export MMMMM=`cat -`; ./12 ; mv 1.csv "`date +%s | tee x.mmmmm`"."$MMMMM".csv; fdp -Tsvg \
 x12.gv > "`cat x.mmmmm`"."$MMMMM".svg ; done
 
