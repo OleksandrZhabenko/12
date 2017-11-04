@@ -1,2 +1,2 @@
-To contact the author, use a e-mail:
+To contact the author, use an e-mail:
 olexandr543@yahoo.com
