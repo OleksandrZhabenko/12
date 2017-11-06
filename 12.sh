@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 # MIT License
 #
 # Copyright (c) 2017 OleksandrZhabenko
