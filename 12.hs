@@ -74,7 +74,7 @@ changeNthLine x = "\"" ++ (concatMap (++"\"->\"") x) ++ "\n"
 
 dropLast :: String -> String
 dropLast x | ((drop (length x - 4) x) == "->\"\n") = dropLast (take (length x - 4) x)
-           | otherwise = x ++ "\n"
+           | otherwise = x ++ ";\n"
            
 dropDouble :: String -> String
 dropDouble x = if length x >= 2 
