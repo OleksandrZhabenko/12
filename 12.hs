@@ -32,8 +32,12 @@ divideString p x = if (foldr1 (||) (map p x))
    else [x]   
       where y = (length $ filter p x)
 
+dropEmptyLines :: [String] -> [String]
+dropEmptyLines [] = []
+dropEmptyLines xs@(ys:yss) = if ((dropWhile isComma ys == "\n") || (dropWhile isComma ys == "")) then dropEmptyLines yss else ys:(dropEmptyLines yss)
+
 cells :: String -> [[String]]
-cells x = map (divideString isComma) (lines x)
+cells x = map (divideString isComma) (dropEmptyLines $ lines x)
 
 changeCell :: String -> String -> String -> String
 changeCell x y z | (y /= []) = y
