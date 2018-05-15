@@ -1,7 +1,7 @@
 {-
 MIT License
 
-Copyright (c) 2017 OleksandrZhabenko
+Copyright (c) 2017,2018 OleksandrZhabenko
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -30,14 +30,14 @@ divideString p [] = [""]
 divideString p x = if (foldr1 (||) (map p x)) 
    then map (fst . (break p)) (take (y+1) (iterate (tail . (dropWhile (not . p))) x))
    else [x]   
-      where y = (length $ filter p x)
+      where y = (length $! filter p x)
 
 dropEmptyLines :: [String] -> [String]
 dropEmptyLines [] = []
 dropEmptyLines xs@(ys:yss) = if ((dropWhile isComma ys == "\n") || (dropWhile isComma ys == "")) then dropEmptyLines yss else ys:(dropEmptyLines yss)
 
 cells :: String -> [[String]]
-cells x = map (divideString isComma) (dropEmptyLines $ lines x)
+cells x = map (divideString isComma) (dropEmptyLines $! lines x)
 
 changeCell :: String -> String -> String -> String
 changeCell x y z | (y /= []) = y
@@ -45,7 +45,7 @@ changeCell x y z | (y /= []) = y
                  | otherwise = ""
 
 isTruncated :: String -> String -> Bool
-isTruncated w w' = if ((null w) && (not $ null w')) then True else False
+isTruncated w w' = if ((null w) && (not $! null w')) then True else False
 
 boolListTruncated :: [String] -> [Bool]
 boolListTruncated y = zipWith isTruncated y y''
@@ -60,10 +60,10 @@ createSecondLine x y = take (countChanged (boolListTruncated y)) y'
          y'' = (tail y) ++ [""]
             
 lineN :: Int -> [[String]] -> [String]
-lineN n x = last $ (take n x)
+lineN n x = last $! (take n x)
 
 lineN' :: Int -> [[String]] -> [String]
-lineN' n x = last $ (take (n-1) x)
+lineN' n x = last $! (take (n-1) x)
 
 createNthLine :: [[String]] -> Int -> [String]
 createNthLine x@(xs:xss) n | ((n < 1) || (n > length x)) = error "Undefined line!"
